@@ -10,6 +10,13 @@ sealed class Either<out L, out R> {
             return Right(value)
         }
     }
+
+    inline fun <L2, R2> map(lMap: (L) -> L2, rMap: (R) -> R2): Either<L2, R2> {
+        return when (this) {
+            is Left -> left(lMap(this.value))
+            is Right -> right(rMap(this.value))
+        }
+    }
 }
 
 class Left<T> internal constructor(val value: T) : Either<T, Nothing>()
