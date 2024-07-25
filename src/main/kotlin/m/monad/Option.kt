@@ -2,16 +2,17 @@ package m.monad
 
 sealed class Option<out T> {
 
-    fun <T2> map(mapper: (T) -> T2): Option<T2> {
+    inline fun <T2> map(mapper: (T) -> T2): Option<T2> {
         return when (this) {
             is Some<T> -> {
                 some(mapper(value))
             }
+
             None -> none()
         }
     }
 
-    fun <T2> flatMap(binding: (T) -> Option<T2>): Option<T2> {
+    inline fun <T2> flatMap(binding: (T) -> Option<T2>): Option<T2> {
         return when (this) {
             is Some<T> -> binding(this.value)
             None -> none()
@@ -33,8 +34,14 @@ sealed class Option<out T> {
         fun <TT> none(): Option<TT> {
             return None
         }
+
+        inline fun <T> of(block: () -> T?): Option<T> {
+            val v = block()
+            return if (v != null) some(v)
+            else none()
+        }
     }
 }
 
-class Some<T>internal constructor(val value: T) : Option<T>()
+class Some<T> internal constructor(val value: T) : Option<T>()
 object None : Option<Nothing>()
