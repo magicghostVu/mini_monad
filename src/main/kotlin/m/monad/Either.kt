@@ -17,6 +17,16 @@ sealed class Either<out L, out R> {
             is Right -> right(rMap(this.value))
         }
     }
+
+    inline fun <R2> flatMapRight(binding: (R) -> Either<@UnsafeVariance L, R2>): Either<L, R2> {
+        return when (this) {
+            is Left -> this
+            is Right -> {
+                binding(value)
+            }
+        }
+    }
+
 }
 
 class Left<T> internal constructor(val value: T) : Either<T, Nothing>()
