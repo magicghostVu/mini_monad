@@ -43,5 +43,9 @@ sealed class Option<out T> {
     }
 }
 
-class Some<T> internal constructor(val value: T) : Option<T>()
+class Some<T> internal constructor(val value: T) : Option<T>(){
+    override fun toString(): String {
+        return "Some($value)"
+    }
+}
 object None : Option<Nothing>()
