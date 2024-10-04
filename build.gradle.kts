@@ -5,8 +5,6 @@ plugins {
     id("maven-publish")
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -14,6 +12,7 @@ repositories {
 
 dependencies {
     //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+    //implementation("io.arrow-kt:arrow-core:1.2.4")
 }
 
 tasks.withType<KotlinCompile>(){
@@ -35,25 +34,36 @@ java {
 }
 
 publishing {
+    /*repositories {
+        maven {
+            credentials(HttpHeaderCredentials::class) {
+                name = "Private-Token"
+                value = project.properties.getValue("deploy.token") as String
+            }
+            url = uri("https://gitlab.zingplay.com/api/v4/projects/63/packages/maven")
+            authentication {
+                create<HttpHeaderAuthentication>("header")
+            }
+        }
+    }*/
+
     repositories {
         maven {
-            credentials {
-                username = "phuvh"
-                password = "VmlAC8AFRAsnUDB23f2YfWqZu6CM59qUOgox1h14a1GDdr5rNrNqPfLJnRNfkz6V"
-            }
-            url = uri("http://localhost:3001/releases")
-            isAllowInsecureProtocol = true
-            authentication {
-                create<BasicAuthentication>("basic")
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/magicghostVu/mini_monad")
+            credentials() {
+                username = "magicghostVu"
+                password = project.properties.getValue("github.deploy.token") as String
             }
         }
     }
+
     publications {
         create<MavenPublication>("maven") {
 
             groupId = "org.magicghostvu"
             artifactId = "mini-monad"
-            version = "0.1-SNAPSHOT"
+            version = "0.1.4"
 
             from(components["kotlin"])
             artifact(tasks["sourcesJar"])
