@@ -29,5 +29,5 @@ sealed class Either<out L, out R> {
 
 }
 
-class Left<T> internal constructor(val value: T) : Either<T, Nothing>()
-class Right<T> internal constructor(val value: T) : Either<Nothing, T>()
+data class Left<T> internal constructor(val value: T) : Either<T, Nothing>()
+data class Right<T> internal constructor(val value: T) : Either<Nothing, T>()

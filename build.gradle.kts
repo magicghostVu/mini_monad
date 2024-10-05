@@ -63,7 +63,7 @@ publishing {
 
             groupId = "org.magicghostvu"
             artifactId = "mini-monad"
-            version = "0.1.4"
+            version = "0.1.5"
 
             from(components["kotlin"])
             artifact(tasks["sourcesJar"])
