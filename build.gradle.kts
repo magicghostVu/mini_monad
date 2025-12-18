@@ -11,8 +11,7 @@ repositories {
 }
 
 dependencies {
-    //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
-    //implementation("io.arrow-kt:arrow-core:1.2.4")
+    implementation("org.slf4j:slf4j-api:2.0.9")
 }
 
 tasks.withType<KotlinCompile>(){
@@ -24,17 +23,13 @@ tasks.withType<KotlinCompile>(){
 }
 
 
-kotlin {
-    jvmToolchain(8)
-}
-
 java {
     withSourcesJar()
     //withJavadocJar()
 }
 
 publishing {
-    /*repositories {
+    repositories {
         maven {
             credentials(HttpHeaderCredentials::class) {
                 name = "Private-Token"
@@ -45,9 +40,9 @@ publishing {
                 create<HttpHeaderAuthentication>("header")
             }
         }
-    }*/
+    }
 
-    repositories {
+    /*repositories {
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/magicghostVu/mini_monad")
@@ -56,7 +51,7 @@ publishing {
                 password = project.properties.getValue("github.deploy.token") as String
             }
         }
-    }
+    }*/
 
     publications {
         create<MavenPublication>("maven") {
